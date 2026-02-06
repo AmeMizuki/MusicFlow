@@ -50,9 +50,10 @@
               icon="pi pi-random" 
               rounded 
               outlined 
-              severity="secondary" 
+              severity="primary" 
               v-tooltip.bottom="$t('player.shuffle')"
               @click="shufflePlaylist" 
+              class="shuffle-btn"
             />
             <Button 
               icon="pi pi-trash" 
@@ -333,6 +334,19 @@ const deletePlaylist = () => {
   padding-left: 36px !important;
   padding-right: 36px !important;
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+.shuffle-btn {
+  border-width: 2px !important;
+}
+
+.shuffle-btn i {
+  font-size: 1.1rem;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
 }
 
 /* Tracks Table */

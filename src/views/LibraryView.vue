@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div v-else class="empty-state-container glass-panel">
+    <div v-div v-else class="empty-state-container glass-panel">
       <div class="empty-icon-wrapper">
         <i class="pi pi-music"></i>
       </div>
@@ -215,6 +215,8 @@ const goToPlaylists = () => {
 .empty-icon-wrapper i {
   font-size: 3.5rem;
   color: white;
+  display: block;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .empty-state-container h3 {

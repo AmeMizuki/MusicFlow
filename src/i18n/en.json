@@ -102,6 +102,8 @@
     "next": "Next",
     "previous": "Previous",
     "volume": "Volume",
+    "mute": "Mute",
+    "unmute": "Unmute",
     "none": "No music selected",
     "queue": "Queue",
     "now_playing": "Now Playing",

@@ -164,6 +164,12 @@ const currentBaseView = computed(() => {
 .collapsed .logo-area {
   justify-content: center;
   width: 100%;
+  padding-bottom: 20px;
+}
+
+.collapsed .logo-img {
+  width: 28px;
+  height: 28px;
 }
 
 .logo-img {
@@ -201,10 +207,13 @@ const currentBaseView = computed(() => {
 
 .collapsed .collapse-toggle {
   position: absolute;
-  top: 10px;
+  top: 50%;
   right: -14px;
-  background: var(--bg-secondary);
-  box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+  transform: translateY(-50%);
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  box-shadow: 4px 0 15px rgba(59, 130, 246, 0.4);
 }
 
 .collapse-toggle:hover {
