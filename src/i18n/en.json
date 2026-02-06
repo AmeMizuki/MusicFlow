@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "MusicFlow",
+    "welcome": "Welcome to MusicFlow",
+    "empty": "No music yet, please upload files"
+  },
+  "library": {
+    "title": "Home Library",
+    "empty": "Your library is empty",
+    "empty_hint": "No music added yet. Go to 'Upload' to start your music journey.",
+    "like": "Add to favorites",
+    "unlike": "Remove from favorites"
+  },
+  "nav": {
+    "library": "Home",
+    "playlists": "Playlists",
+    "upload": "Upload",
+    "settings": "Settings",
+    "my_playlists": "My Playlists"
+  },
+  "stats": {
+    "music": "Songs",
+    "albums": "Albums"
+  },
+  "playlists": {
+    "create": "Create Playlist",
+    "create_first": "Create Your First Playlist",
+    "import": "Import Playlist",
+    "empty": "No playlists yet",
+    "empty_desc": "Create collections to organize your favorite music",
+    "new_title": "New Playlist",
+    "name_placeholder": "Enter playlist name",
+    "collection": "Playlist",
+    "remove": "Remove from Playlist",
+    "add_to": "Add to Playlist",
+    "no_tracks": "No songs in this playlist yet",
+    "add_now": "Find some songs",
+    "created_at": "Created on {date}"
+  },
+  "uploader": {
+    "description": "Add new music to your library by selecting files or folders.",
+    "clickToUpload": "Click to Upload Music",
+    "dragDropHint": "or drag and drop files/folders here",
+    "orSelectFolder": "or select a folder to upload",
+    "supportedFormats": "MP3, WAV, FLAC, OGG, M4A",
+    "processing": "Processing",
+    "results": "Results",
+    "successCount": "{count} files added successfully",
+    "failedCount": "{count} files failed to upload"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your playback experience and interface style",
+    "theme": {
+      "title": "Theme Style",
+      "desc": "Choose between Dark or Light mode to adjust the look",
+      "dark": "Dark Mode",
+      "light": "Light Mode"
+    },
+    "language": {
+      "title": "Display Language",
+      "desc": "Switch the UI language of the application"
+    },
+    "adaptive_color": {
+      "title": "Adaptive Color",
+      "desc": "UI and background colors will change based on album art"
+    },
+    "reset": {
+      "title": "Reset Application",
+      "desc": "This will clear all cache, preferences, and library data",
+      "button": "Clear All Data",
+      "confirm": "Are you sure you want to reset all data? This cannot be undone."
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search...",
+    "loading": "Loading...",
+    "clear": "Clear",
+    "view_all": "View All",
+    "expand": "Expand Sidebar",
+    "collapse": "Collapse Sidebar"
+  },
+  "music": {
+    "title": "Title",
+    "artist": "Artist",
+    "album": "Album",
+    "duration": "Duration",
+    "fileSize": "File Size",
+    "format": "Format",
+    "addMusic": "Add Music",
+    "noMusic": "No music files"
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "next": "Next",
+    "previous": "Previous",
+    "volume": "Volume",
+    "none": "No music selected",
+    "queue": "Queue",
+    "now_playing": "Now Playing",
+    "up_next": "Up Next",
+    "queue_empty": "No songs in queue",
+    "shuffle": "Shuffle & Play",
+    "playMode": {
+      "sequential": "Sequential",
+      "repeatOne": "Repeat One",
+      "repeatAll": "Repeat All",
+      "shuffle": "Shuffle"
+    }
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light"
+  }
+}

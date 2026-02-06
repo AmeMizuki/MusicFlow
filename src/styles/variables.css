@@ -1,0 +1,142 @@
+/* CSS Variables for theming */
+:root {
+  /* Premium Navy & Mystic Purple Palette (Default / Dark) */
+  --bg-primary: #050b18; /* Deep Navy */
+  --bg-secondary: #0a1226; /* Dark Navy */
+  --bg-tertiary: #141e33; /* Soft Navy */
+  
+  /* Grad: Strong Navy Blue to Mystic Purple */
+  --grad-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); 
+  --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --grad-mesh: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.25) 0, transparent 50%),
+               radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.2) 0, transparent 50%),
+               radial-gradient(at 100% 0%, rgba(96, 32, 128, 0.15) 0, transparent 50%);
+  
+  --grad-bg: linear-gradient(135deg, #020617 0%, #050b18 50%, #170936 100%);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+
+  --accent-primary: #3b82f6; /* Bright Navy Blue */
+  --accent-secondary: #8b5cf6; /* Mystic Purple */
+  --accent-hover: #60a5fa;
+  --danger: #ef4444;
+  
+  /* Glassmorphism refined */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 40px;
+  
+  /* Font */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* PrimeVue Aura Theme Foundation Overrides (Force them to Navy/Purple) */
+  --p-primary-color: #3b82f6 !important;
+  --p-primary-contrast-color: #ffffff !important;
+  --p-primary-hover-color: #60a5fa !important;
+  --p-primary-active-color: #2563eb !important;
+
+  --p-primary-50: #eff6ff !important;
+  --p-primary-100: #dbeafe !important;
+  --p-primary-200: #bfdbfe !important;
+  --p-primary-300: #93c5fd !important;
+  --p-primary-400: #60a5fa !important;
+  --p-primary-500: #3b82f6 !important;
+  --p-primary-600: #2563eb !important;
+  --p-primary-700: #1d4ed8 !important;
+  --p-primary-800: #1e40af !important;
+  --p-primary-900: #1e3a8a !important;
+  --p-primary-950: #172554 !important;
+  
+  --p-button-primary-background: #3b82f6 !important;
+  --p-button-primary-border-color: #3b82f6 !important;
+  --p-button-primary-hover-background: #60a5fa !important;
+  --p-button-primary-hover-border-color: #60a5fa !important;
+  
+  --p-mask-background: rgba(5, 11, 24, 0.8) !important;
+  --p-focus-ring-color: #3b82f6 !important;
+  --p-select-option-focus-background: rgba(59, 130, 246, 0.1) !important;
+  --p-select-option-selected-background: rgba(59, 130, 246, 0.2) !important;
+  --p-select-option-selected-focus-background: rgba(59, 130, 246, 0.25) !important;
+  
+  /* For Mystic Purple accents in PrimeVue */
+  --p-variant-secondary-500: #8b5cf6 !important;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1.25rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 2rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* Light Theme Block */
+.theme-light {
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e4e6eb;
+  
+  --grad-bg: linear-gradient(135deg, #f0f2f5 0%, #ffffff 100%);
+  --grad-surface: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0) 100%);
+  --grad-mesh: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0, transparent 50%),
+               radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.08) 0, transparent 50%),
+               radial-gradient(at 100% 0%, rgba(96, 32, 128, 0.05) 0, transparent 50%);
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #8a8a8a;
+
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-blur: 20px;
+  
+  --accent-primary: #2563eb;
+  --accent-secondary: #7c3aed;
+}
+
+/* Specific PrimeVue component force-overrides */
+.p-button.p-button-primary {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+}
+
+.p-button.p-button-primary:hover {
+  background: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+}
+
+.p-tag-primary {
+  background: var(--accent-primary) !important;
+}
+
+.p-progressbar .p-progressbar-value {
+  background: var(--grad-primary) !important;
+}
+
+.p-togglebutton.p-highlight {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+}
+
+.p-selectbutton .p-togglebutton.p-highlight {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+}
