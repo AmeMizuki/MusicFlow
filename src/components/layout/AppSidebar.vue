@@ -1,79 +1,68 @@
 <template>
-  <aside 
-    class="app-sidebar glass-panel"
-    :class="{ collapsed: viewStore.isSidebarCollapsed }"
-  >
-    <div class="sidebar-header">
-      <div class="logo-area" @click="viewStore.setView('library')">
-        <img src="/logo.svg" alt="MusicFlow Logo" class="logo-img" />
-        <span v-if="!viewStore.isSidebarCollapsed" class="logo-text">MusicFlow</span>
+  <aside class="app-sidebar" :class="{ collapsed: viewStore.isSidebarCollapsed }">
+    <!-- Logo Section -->
+    <div class="sidebar-logo" @click="viewStore.setView('library')">
+      <div class="logo-icon">
+        <img src="/logo.svg" alt="Logo" class="sidebar-logo-img" />
       </div>
-      <button 
-        class="collapse-toggle" 
-        @click="viewStore.toggleSidebar"
-        v-tooltip.right="viewStore.isSidebarCollapsed ? $t('common.expand') : $t('common.collapse')"
-      >
-        <i :class="viewStore.isSidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'"></i>
-      </button>
+      <span class="logo-text">MusicFlow</span>
     </div>
 
+    <!-- Main Navigation -->
     <nav class="sidebar-nav">
-      <button 
-        v-for="item in navItems" 
-        :key="item.id"
-        class="nav-item"
-        :class="{ active: currentBaseView === item.id }"
-        @click="viewStore.setView(item.id)"
-        v-tooltip.right="viewStore.isSidebarCollapsed ? $t(`nav.${item.id}`) : null"
-      >
-        <i :class="item.icon"></i>
-        <span v-if="!viewStore.isSidebarCollapsed">{{ $t(`nav.${item.id}`) }}</span>
-      </button>
-
-      <div class="nav-divider"></div>
-      
-      <div v-if="!viewStore.isSidebarCollapsed" class="sidebar-section">
-        <span class="section-title">{{ $t('nav.my_playlists') }}</span>
-        <div class="playlist-quick-list">
-          <button 
-            v-for="playlist in playlistStore.playlists.slice(0, 5)" 
-            :key="playlist.id"
-            class="playlist-link"
-            :class="{ active: viewStore.currentView === 'playlist-detail' && viewStore.selectedPlaylistId === playlist.id }"
-            @click="viewStore.setView('playlist-detail', { playlistId: playlist.id })"
-          >
-            <i class="pi pi-list"></i>
-            <span class="p-name">{{ playlist.name }}</span>
-          </button>
-          <button v-if="playlistStore.playlists.length > 0" class="view-all-link" @click="viewStore.setView('playlists')">
-            {{ $t('common.view_all') }}
-          </button>
-        </div>
-      </div>
-      <div v-else class="sidebar-section collapsed-center">
-        <button 
-          class="nav-item tray-btn" 
-          @click="viewStore.setView('playlists')"
-          v-tooltip.right="$t('nav.playlists')"
+      <div class="nav-section">
+        <div 
+          v-for="item in navItems" 
+          :key="item.id"
+          class="nav-item"
+          :class="{ active: currentBaseView === item.id }"
+          @click="viewStore.setView(item.id)"
+          v-tooltip.right="viewStore.isSidebarCollapsed ? $t(`nav.${item.id}`) : null"
         >
-          <i class="pi pi-list"></i>
-        </button>
+          <i :class="item.icon"></i>
+          <span class="nav-label">{{ $t(`nav.${item.id}`) }}</span>
+          <div v-if="currentBaseView === item.id" class="active-indicator"></div>
+        </div>
       </div>
     </nav>
 
-    <div v-if="!viewStore.isSidebarCollapsed" class="sidebar-footer">
-      <div class="stats-card glass">
-        <div class="stat-item">
-          <i class="pi pi-music stat-icon"></i>
-          <span class="stat-value">{{ libraryStore.totalMusic }}</span>
-          <span class="stat-label">{{ $t('stats.music') }}</span>
+    <!-- Playlists Section -->
+    <div class="sidebar-playlists">
+      <div class="section-header">
+        <span class="section-title">{{ $t('nav.my_playlists') }}</span>
+        <Button 
+          icon="pi pi-plus" 
+          text 
+          rounded 
+          size="small" 
+          class="add-playlist-btn"
+          @click="playlistStore.showCreateDialog = true"
+          v-tooltip.top="$t('playlists.create')"
+        />
+      </div>
+
+      <div class="playlist-list-scroll">
+        <div v-if="playlistStore.playlists.length === 0" class="empty-playlists">
+          <p>{{ $t('playlists.empty') }}</p>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <i class="pi pi-folder stat-icon"></i>
-          <span class="stat-value">{{ libraryStore.getAlbums.length }}</span>
-          <span class="stat-label">{{ $t('stats.albums') }}</span>
+        <div 
+          v-for="playlist in playlistStore.playlists" 
+          :key="playlist.id"
+          class="playlist-item"
+          :class="{ active: viewStore.currentView === 'playlist-detail' && viewStore.selectedPlaylistId === playlist.id }"
+          @click="viewStore.setView('playlist-detail', { playlistId: playlist.id })"
+        >
+          <i class="pi pi-list"></i>
+          <span class="playlist-name">{{ playlist.name }}</span>
         </div>
+      </div>
+    </div>
+
+    <!-- User Profile / Bottom Actions -->
+    <div class="sidebar-footer">
+      <div class="sidebar-toggle" @click="viewStore.toggleSidebar">
+        <i :class="viewStore.isSidebarCollapsed ? 'pi pi-angle-double-right' : 'pi pi-angle-double-left'"></i>
+        <span class="nav-label">{{ viewStore.isSidebarCollapsed ? $t('common.expand') : $t('common.collapse') }}</span>
       </div>
     </div>
   </aside>
@@ -90,10 +79,12 @@ const libraryStore = useMusicLibraryStore()
 const playlistStore = usePlaylistStore()
 
 const navItems = [
-  { id: 'library', icon: 'pi pi-compass' },
-  { id: 'playlists', icon: 'pi pi-clone' },
+  { id: 'library', icon: 'pi pi-home' },
+  { id: 'liked', icon: 'pi pi-heart' },
+  { id: 'playlists', icon: 'pi pi-list' },
   { id: 'upload', icon: 'pi pi-cloud-upload' },
-  { id: 'settings', icon: 'pi pi-cog' }
+  { id: 'settings', icon: 'pi pi-cog' },
+  { id: 'about', icon: 'pi pi-info-circle' }
 ]
 
 const currentBaseView = computed(() => {
@@ -103,295 +94,247 @@ const currentBaseView = computed(() => {
 </script>
 
 <style scoped>
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 500;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  padding: 0 var(--spacing-xl);
-  background: rgba(5, 11, 24, 0.4);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border-bottom: 1px solid var(--glass-border);
-}
 .app-sidebar {
   width: 260px;
-  height: calc(100vh - 100px);
+  height: 100vh;
+  background: rgba(10, 18, 38, 0.6);
+  backdrop-filter: blur(30px);
+  border-right: 1px solid var(--glass-border);
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-lg) var(--spacing-md);
-  background: var(--bg-secondary);
-  border-right: 1px solid var(--glass-border);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
   position: relative;
-  z-index: 100;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-x: hidden;
 }
 
 .app-sidebar.collapsed {
   width: 80px;
-  padding: var(--spacing-lg) var(--spacing-xs);
 }
 
-.sidebar-header {
+.sidebar-logo {
+  height: 80px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--spacing-xs);
-  margin-bottom: var(--spacing-xl);
-  min-height: 48px;
-  position: relative;
-}
-
-.collapsed .sidebar-header {
-  flex-direction: column;
-  gap: 12px;
-  padding: 0;
-  justify-content: center;
-}
-
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
+  padding: 0 24px;
+  gap: 16px;
   cursor: pointer;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
-.collapsed .logo-area {
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+.sidebar-logo-img {
   width: 100%;
-  padding-bottom: 20px;
-}
-
-.collapsed .logo-img {
-  width: 28px;
-  height: 28px;
-}
-
-.logo-img {
-  width: 36px;
-  height: 36px;
+  height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(79, 70, 229, 0.3));
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
 }
 
 .logo-text {
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: -1.2px;
+  font-size: 1.4rem;
+  font-weight: 900;
   background: var(--grad-primary);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
   white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
-.collapse-toggle {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text-tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  z-index: 10;
-}
-
-.collapsed .collapse-toggle {
-  position: absolute;
-  top: 50%;
-  right: -14px;
-  transform: translateY(-50%);
-  background: var(--accent-primary);
-  color: white;
-  border-color: var(--accent-primary);
-  box-shadow: 4px 0 15px rgba(59, 130, 246, 0.4);
-}
-
-.collapse-toggle:hover {
-  background: var(--accent-primary);
-  color: white;
-  border-color: var(--accent-primary);
-  transform: scale(1.1);
+.collapsed .logo-text {
+  opacity: 0;
+  width: 0;
+  pointer-events: none;
 }
 
 .sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+  padding: 12px;
 }
 
 .nav-item {
+  height: 50px;
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  padding: 12px 16px;
-  border: none;
-  background: none;
-  color: var(--text-secondary);
-  cursor: pointer;
+  padding: 0 16px;
+  gap: 16px;
   border-radius: 12px;
-  transition: all var(--transition-normal);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.collapsed .nav-item {
-  justify-content: center;
-  padding: 12px;
-  width: 52px;
-  margin: 0 auto;
-}
-
-.nav-item i {
-  font-size: 1.3rem;
-  flex-shrink: 0;
+  margin-bottom: 4px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  position: relative;
+  transition: all 0.3s;
 }
 
 .nav-item:hover {
-  color: var(--text-primary);
   background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
 }
 
 .nav-item.active {
-  color: white;
-  background: var(--grad-primary);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, transparent 100%);
+  color: var(--accent-primary);
 }
 
-.nav-item.active i {
-  color: white;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+.nav-item i {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
 }
 
-.nav-divider {
-  height: 1px;
-  background: var(--glass-border);
-  margin: var(--spacing-md) var(--spacing-sm);
+.nav-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s;
 }
 
-.sidebar-section {
-  padding: 0 var(--spacing-sm);
+.collapsed .nav-label {
+  opacity: 0;
+  width: 0;
 }
 
-.collapsed-center {
+.active-indicator {
+  position: absolute;
+  left: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 4px;
+  background: var(--accent-primary);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.sidebar-playlists {
+  flex: 1;
+  padding: 24px 12px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 12px;
 }
 
 .section-title {
-  display: block;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
-  padding-left: 8px;
+  color: var(--text-tertiary);
+  letter-spacing: 1px;
 }
 
-.playlist-quick-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.collapsed .section-title,
+.collapsed .add-playlist-btn {
+  display: none;
 }
 
-.playlist-link {
+.playlist-list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.playlist-item {
+  height: 40px;
   display: flex;
   align-items: center;
+  padding: 0 16px;
   gap: 12px;
-  padding: 8px 12px;
   border-radius: 8px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all 0.2s;
+}
+
+.playlist-item:hover {
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-secondary);
+}
+
+.playlist-item.active {
+  color: var(--accent-secondary);
+}
+
+.play.logo-icon i {
+  font-size: 1.2rem;
+}
+
+.sidebar-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.playlist-name {
   font-size: 0.9rem;
   font-weight: 500;
-  transition: all var(--transition-fast);
-  text-align: left;
-}
-
-.playlist-link i {
-  font-size: 1rem;
-  color: var(--text-tertiary);
-}
-
-.playlist-link:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.playlist-link.active {
-  color: var(--accent-primary);
-  background: rgba(59, 130, 246, 0.08);
-}
-
-.p-name {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.view-all-link {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  padding: 8px 12px;
-  font-weight: 600;
+.collapsed .playlist-item {
+  justify-content: center;
+  padding: 0;
 }
 
-.view-all-link:hover {
-  color: var(--accent-primary);
+.collapsed .playlist-name {
+  display: none;
 }
 
 .sidebar-footer {
-  margin-top: auto;
-  padding-top: 20px;
+  padding: 12px;
+  border-top: 1px solid var(--glass-border);
 }
 
-.stats-card {
-  padding: var(--spacing-md);
-  border-radius: var(--radius-lg);
+.sidebar-toggle {
+  height: 50px;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  background: var(--grad-surface);
-  border: 1px solid var(--glass-border);
+  padding: 0 16px;
+  gap: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all 0.3s;
 }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.stat-icon {
-  font-size: 0.85rem;
-  color: var(--accent-primary);
-}
-
-.stat-value {
-  font-size: 1rem;
-  font-weight: 700;
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
 }
 
-.stat-label {
-  font-size: 0.6rem;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
+.collapsed .sidebar-toggle {
+  justify-content: center;
+  padding: 0;
 }
 
-.stat-divider {
-  width: 1px;
-  height: 20px;
-  background: var(--glass-border);
+/* Scrollbar styling */
+.playlist-list-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.playlist-list-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.playlist-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>

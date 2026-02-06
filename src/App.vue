@@ -52,6 +52,8 @@ import PlaylistsView from './views/PlaylistsView.vue'
 import PlaylistDetailView from './views/PlaylistDetailView.vue'
 import UploadView from './views/UploadView.vue'
 import SettingsView from './views/SettingsView.vue'
+import AboutView from './views/AboutView.vue'
+import LikedView from './views/LikedView.vue'
 
 const preferencesStore = usePreferencesStore()
 const musicLibrary = useMusicLibraryStore()
@@ -68,7 +70,9 @@ const activeView = computed(() => {
     playlists: PlaylistsView,
     'playlist-detail': PlaylistDetailView,
     upload: UploadView,
-    settings: SettingsView
+    settings: SettingsView,
+    about: AboutView,
+    liked: LikedView
   }
   return views[viewStore.currentView] || LibraryView
 })

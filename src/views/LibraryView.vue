@@ -3,7 +3,7 @@
     <div class="view-header">
       <div class="title-area">
         <div class="icon-box">
-          <i class="pi pi-compass title-icon"></i>
+          <i class="pi pi-headphones title-icon"></i>
         </div>
         <div class="text-group">
           <h2>{{ $t('library.title') }}</h2>
@@ -27,9 +27,9 @@
       </div>
     </div>
 
-    <div v-div v-else class="empty-state-container glass-panel">
+    <div v-else class="empty-state-container glass-panel">
       <div class="empty-icon-wrapper">
-        <i class="pi pi-music"></i>
+        <i class="pi pi-headphones"></i>
       </div>
       <h3>{{ $t('library.empty') }}</h3>
       <p>{{ $t('library.empty_hint') }}</p>
@@ -214,9 +214,11 @@ const goToPlaylists = () => {
 
 .empty-icon-wrapper i {
   font-size: 3.5rem;
-  color: white;
-  display: block;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .empty-state-container h3 {

@@ -20,20 +20,46 @@
             {{ currentMusic?.artist || '-' }}
           </div>
         </div>
+        
+        <Button 
+          v-if="currentMusic"
+          :icon="currentMusic?.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" 
+          text 
+          rounded 
+          :severity="currentMusic?.liked ? 'danger' : 'secondary'"
+          @click="libraryStore.toggleLike(currentMusic.id)" 
+          v-tooltip.top="currentMusic?.liked ? $t('library.unlike') : $t('library.like')"
+          class="player-like-btn"
+        />
       </div>
 
       <!-- 播放控制 - 居中 -->
       <div class="player-controls">
         <div class="control-buttons">
-          <Button 
-            :icon="playModeIcon" 
-            text 
-            rounded 
-            severity="secondary" 
-            @click="playerStore.setPlayMode(nextPlayMode)" 
-            v-tooltip.top="playModeText"
-            class="mode-btn"
-          />
+          <div class="mode-controls">
+            <Button 
+              icon="pi pi-refresh" 
+              rounded 
+              text
+              :severity="playMode === 'shuffle' ? 'primary' : 'secondary'"
+              :class="{ 'mode-active': playMode === 'shuffle' }"
+              @click="toggleShuffle" 
+              v-tooltip.top="$t('player.playMode.shuffle')"
+            />
+            
+            <div class="mode-btn-wrapper">
+              <Button 
+                icon="pi pi-sync" 
+                text
+                rounded 
+                :severity="(playMode === 'repeat-all' || playMode === 'repeat-one') ? 'primary' : 'secondary'"
+                :class="{ 'mode-active': (playMode === 'repeat-all' || playMode === 'repeat-one') }"
+                @click="cycleLoopMode" 
+                v-tooltip.top="loopTooltip"
+              />
+              <span v-if="playMode === 'repeat-one'" class="mode-badge">1</span>
+            </div>
+          </div>
           
           <div class="core-controls">
             <Button 
@@ -128,9 +154,11 @@ import { usePlayerStore } from '../../stores/player'
 import { useViewStore } from '../../stores/viewStore'
 import { useAudioPlayer } from '../../composables/useAudioPlayer'
 import { usePreferencesStore } from '../../stores/preferences'
+import { useMusicLibraryStore } from '../../stores/musicLibrary'
 import { extractDominantColor, getColorBrightness } from '../../services/colorExtractor'
 
 const playerStore = usePlayerStore()
+const libraryStore = useMusicLibraryStore()
 const viewStore = useViewStore()
 const preferencesStore = usePreferencesStore()
 const { t } = useI18n()
@@ -181,7 +209,35 @@ const playerStyle = computed(() => {
   }
 })
 
-// 控制邏輯
+const toggleShuffle = () => {
+  if (playMode.value === 'shuffle') {
+    playerStore.setPlayMode('sequential')
+  } else {
+    playerStore.setPlayMode('shuffle')
+  }
+}
+
+const cycleLoopMode = () => {
+  if (playMode.value === 'repeat-all') {
+    playerStore.setPlayMode('repeat-one')
+  } else if (playMode.value === 'repeat-one') {
+    playerStore.setPlayMode('sequential')
+  } else {
+    playerStore.setPlayMode('repeat-all')
+  }
+}
+
+const loopTooltip = computed(() => {
+  if (playMode.value === 'repeat-one') return t('player.playMode.repeatOne')
+  if (playMode.value === 'repeat-all') return t('player.playMode.repeatAll')
+  return t('player.playMode.repeatAll') // Default tooltip when off
+})
+
+const volumeIcon = computed(() => {
+  if (isMuted.value || volume.value === 0) return 'pi pi-volume-off'
+  if (volume.value < 0.5) return 'pi pi-volume-down'
+  return 'pi pi-volume-up'
+})
 const handleSeek = (e) => {
   seek(parseFloat(e.target.value))
 }
@@ -198,35 +254,6 @@ const progressStyle = computed(() => {
 const volumeStyle = computed(() => {
   const percent = volume.value * 100
   return { background: `linear-gradient(90deg, var(--accent-primary) ${percent}%, rgba(255,255,255,0.1) ${percent}%)` }
-})
-
-// 圖示與文字
-const playModeIcon = computed(() => {
-  switch (playMode.value) {
-    case 'repeat-one': return 'pi pi-refresh'
-    case 'shuffle': return 'pi pi-random'
-    default: return 'pi pi-sort-amount-down'
-  }
-})
-
-const playModeText = computed(() => {
-  switch (playMode.value) {
-    case 'repeat-one': return t('player.playMode.repeatOne')
-    case 'shuffle': return t('player.playMode.shuffle')
-    default: return t('player.playMode.sequential')
-  }
-})
-
-const nextPlayMode = computed(() => {
-  const modes = ['sequential', 'repeat-one', 'shuffle']
-  const index = modes.indexOf(playMode.value)
-  return modes[(index + 1) % modes.length]
-})
-
-const volumeIcon = computed(() => {
-  if (isMuted.value || volume.value === 0) return 'pi pi-volume-off'
-  if (volume.value < 0.5) return 'pi pi-volume-down'
-  return 'pi pi-volume-up'
 })
 </script>
 
@@ -313,6 +340,15 @@ const volumeIcon = computed(() => {
   text-overflow: ellipsis;
 }
 
+.player-like-btn {
+  margin-left: 8px;
+  transition: all 0.3s ease !important;
+}
+
+.player-like-btn:hover {
+  transform: scale(1.1);
+}
+
 /* 控制區域 */
 .player-controls {
   flex: 2;
@@ -321,6 +357,52 @@ const volumeIcon = computed(() => {
   align-items: center;
   gap: 8px;
   max-width: 600px;
+}
+
+.mode-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-btn-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mode-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--text-tertiary);
+  color: white;
+  font-size: 0.55rem;
+  font-weight: 800;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border: 1px solid var(--bg-primary);
+  transform: translate(25%, -25%);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.mode-active + .mode-badge,
+.mode-active .mode-badge {
+  background: white;
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.mode-active {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent-primary) !important;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
 }
 
 .control-buttons {

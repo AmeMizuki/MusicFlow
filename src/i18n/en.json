@@ -9,13 +9,18 @@
     "empty": "Your library is empty",
     "empty_hint": "No music added yet. Go to 'Upload' to start your music journey.",
     "like": "Add to favorites",
-    "unlike": "Remove from favorites"
+    "unlike": "Remove from favorites",
+    "liked_title": "Liked Songs",
+    "no_liked": "No liked songs yet",
+    "no_liked_hint": "Click the heart icon on any song to add it to your collection."
   },
   "nav": {
     "library": "Home",
     "playlists": "Playlists",
     "upload": "Upload",
     "settings": "Settings",
+    "about": "About",
+    "liked": "Liked Songs",
     "my_playlists": "My Playlists"
   },
   "stats": {
@@ -120,5 +125,27 @@
   "theme": {
     "dark": "Dark",
     "light": "Light"
+  },
+  "about": {
+    "title": "About MusicFlow",
+    "subtitle": "Crafting the ultimate modern music experience",
+    "description": "MusicFlow is a modern web-based music player developed by me, designed to combine top-tier UI design with seamless music playback. It's more than just a player; it's a fusion of modern frontend technology and artistic design.",
+    "features": {
+      "title": "Key Advantages",
+      "p1_title": "Exquisite Visual Design",
+      "p1_desc": "Featuring a premium Navy Blue and Mystic Purple palette with Glassmorphism. Every transition and micro-animation is crafted for an immersive experience.",
+      "p2_title": "Adaptive Color Tech",
+      "p2_desc": "Exclusive color extraction algorithm that dynamically adjusts the entire UI's lighting and tone based on the current album art.",
+      "p3_title": "Seamless Management",
+      "p3_desc": "Support for multiple formats (MP3, WAV, FLAC, OGG, M4A) and folder uploads. All data is cached locally for privacy and speed."
+    },
+    "tech": {
+      "title": "Technologies",
+      "stack": "Core: Vue 3 + Vite + Pinia",
+      "ui": "UI Framework: PrimeVue 4 + Vanilla CSS",
+      "i18n": "Localization: Vue-i18n",
+      "other": "Color Analysis: Canvas API + ColorThief"
+    },
+    "github": "View on GitHub"
   }
 }

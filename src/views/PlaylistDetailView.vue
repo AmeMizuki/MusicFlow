@@ -18,7 +18,7 @@
             </div>
           </div>
           <div v-else class="default-cover-large">
-            <i class="pi pi-clone"></i>
+            <i class="pi pi-list"></i>
           </div>
         </div>
 
@@ -47,7 +47,7 @@
               :disabled="playlist.musicIds.length === 0"
             />
             <Button 
-              icon="pi pi-random" 
+              icon="pi pi-refresh" 
               rounded 
               outlined 
               severity="primary" 
@@ -336,12 +336,31 @@ const deletePlaylist = () => {
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
 }
 
-.shuffle-btn {
-  border-width: 2px !important;
+ /* Global PrimeVue Icon Visibility Fix */
+.p-button .p-button-icon,
+.p-button .pi,
+.pi {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: inherit !important;
+  visibility: visible !important;
 }
 
-.shuffle-btn i {
-  font-size: 1.1rem;
+/* Specific fix for shuffle icon */
+.pi-shuffle {
+  display: inline-flex !important;
+}
+
+.shuffle-btn {
+  border-width: 2px !important;
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.shuffle-btn :deep(.p-button-icon) {
+  font-size: 1.2rem !important;
+  color: var(--accent-primary) !important;
 }
 
 .back-btn:hover {

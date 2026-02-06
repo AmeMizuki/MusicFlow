@@ -22,7 +22,8 @@ export const useMusicLibraryStore = defineStore('musicLibrary', {
     artists: {},            // { [artist: string]: MusicFile[] }
     albums: {},             // { [album: string]: MusicFile[] }
     likedMusic: [],         // string[] (music IDs)
-    isLoading: false
+    isLoading: false,
+    fileCache: new Map()    // { [id: string]: File } - 僅存在於記憶體中，重新整理即消失
   }),
 
   getters: {
@@ -120,6 +121,9 @@ export const useMusicLibraryStore = defineStore('musicLibrary', {
               lastPlayedAt: null
             }
 
+            // 快取實際檔案到記憶體（不持久化）
+            this.fileCache.set(music.id, file)
+
             // 加入到音樂庫
             this.music.push(music)
             results.success.push(music)
@@ -155,6 +159,9 @@ export const useMusicLibraryStore = defineStore('musicLibrary', {
       const index = this.music.findIndex(m => m.id === id)
       if (index !== -1) {
         this.music.splice(index, 1)
+
+        // 從記憶體中移除
+        this.fileCache.delete(id)
 
         // 從收藏中移除
         const likedIndex = this.likedMusic.indexOf(id)
@@ -305,6 +312,7 @@ export const useMusicLibraryStore = defineStore('musicLibrary', {
       this.artists = {}
       this.albums = {}
       this.likedMusic = []
+      this.fileCache.clear()
       this.saveToStorage()
     }
   }

@@ -3,7 +3,7 @@
  * 整合 audioService 和 player store
  */
 
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { usePlayerStore } from '../stores/player'
 import { useMusicLibraryStore } from '../stores/musicLibrary'
 import audioService from '../services/audioService'
@@ -52,13 +52,27 @@ export function useAudioPlayer() {
         throw new Error('音樂不存在')
       }
 
-      // 在這裡處理實際播放邏輯（如果有的話）
+      // 從記憶體快取中獲取實際檔案
+      const file = libraryStore.fileCache.get(musicId)
+      if (!file) {
+        // 如果重新整理後檔案丟失，提示用戶
+        throw new Error('音樂檔案已丟失，請重新上傳')
+      }
+
+      // 載入音樂到音訊服務
+      await audioService.load(file)
+
+      // 在這裡處理實際播放邏輯
       playerStore.play(musicId)
       libraryStore.updateLastPlayed(musicId)
 
       duration.value = music.duration || 0
+      
+      // 自動播放
+      await audioService.play()
     } catch (error) {
       console.error('載入音樂失敗', error)
+      // 如果是檔案丟失，可以考慮從列表移除或顯示提示
       throw error
     } finally {
       isLoading.value = false
@@ -72,8 +86,13 @@ export function useAudioPlayer() {
       playerStore.pause()
     } else {
       if (playerStore.currentMusicId) {
-        await audioService.play()
-        playerStore.play(playerStore.currentMusicId)
+        // 確保音訊服務中有載入內容
+        if (!audioService.currentFile) {
+          await loadAndPlay(playerStore.currentMusicId)
+        } else {
+          await audioService.play()
+          playerStore.play(playerStore.currentMusicId)
+        }
       }
     }
   }

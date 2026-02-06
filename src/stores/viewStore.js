@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useViewStore = defineStore('view', {
   state: () => ({
-    currentView: 'library', // 'library', 'playlists', 'upload', 'settings', 'playlist-detail'
+    currentView: 'library', // 'library', 'playlists', 'upload', 'settings', 'playlist-detail', 'about'
     selectedPlaylistId: null,
     isQueueOpen: false,
     isSidebarCollapsed: false

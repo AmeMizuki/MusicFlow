@@ -1,11 +1,10 @@
 /* CSS Variables for theming */
 :root {
-  /* Premium Navy & Mystic Purple Palette (Default / Dark) */
-  --bg-primary: #050b18; /* Deep Navy */
-  --bg-secondary: #0a1226; /* Dark Navy */
-  --bg-tertiary: #141e33; /* Soft Navy */
+  /* Premium Navy & Mystic Purple Palette */
+  --bg-primary: #050b18; 
+  --bg-secondary: #0a1226; 
+  --bg-tertiary: #141e33; 
   
-  /* Grad: Strong Navy Blue to Mystic Purple */
   --grad-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); 
   --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   --grad-mesh: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.25) 0, transparent 50%),
@@ -18,20 +17,18 @@
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-tertiary: rgba(255, 255, 255, 0.45);
 
-  --accent-primary: #3b82f6; /* Bright Navy Blue */
-  --accent-secondary: #8b5cf6; /* Mystic Purple */
+  --accent-primary: #3b82f6; 
+  --accent-secondary: #8b5cf6; 
   --accent-hover: #60a5fa;
   --danger: #ef4444;
   
-  /* Glassmorphism refined */
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: 40px;
   
-  /* Font */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
-  /* PrimeVue Aura Theme Foundation Overrides (Force them to Navy/Purple) */
+  /* PrimeVue Aura Theme Foundation Overrides */
   --p-primary-color: #3b82f6 !important;
   --p-primary-contrast-color: #ffffff !important;
   --p-primary-hover-color: #60a5fa !important;
@@ -60,7 +57,6 @@
   --p-select-option-selected-background: rgba(59, 130, 246, 0.2) !important;
   --p-select-option-selected-focus-background: rgba(59, 130, 246, 0.25) !important;
   
-  /* For Mystic Purple accents in PrimeVue */
   --p-variant-secondary-500: #8b5cf6 !important;
 
   /* Spacing */
@@ -80,7 +76,7 @@
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Shadows */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -88,7 +84,6 @@
   --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
 }
 
-/* Light Theme Block */
 .theme-light {
   --bg-primary: #f0f2f5;
   --bg-secondary: #ffffff;
@@ -113,18 +108,25 @@
 }
 
 /* Specific PrimeVue component force-overrides */
-.p-button.p-button-primary {
+.p-button.p-button-primary:not(.p-button-outlined):not(.p-button-text) {
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
 }
 
-.p-button.p-button-primary:hover {
-  background: var(--accent-hover) !important;
-  border-color: var(--accent-hover) !important;
+.p-button.p-button-primary.p-button-outlined {
+  background: transparent !important;
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+}
+
+.p-button.p-button-primary.p-button-outlined:hover {
+  background: rgba(59, 130, 246, 0.1) !important;
 }
 
 .p-tag-primary {
   background: var(--accent-primary) !important;
+  color: #ffffff !important;
 }
 
 .p-progressbar .p-progressbar-value {
@@ -134,9 +136,36 @@
 .p-togglebutton.p-highlight {
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
 }
 
 .p-selectbutton .p-togglebutton.p-highlight {
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+}
+
+/* Global PrimeVue Icon Visibility Fix */
+.p-button .p-button-icon,
+.p-button .pi,
+.pi {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: inherit !important;
+  visibility: visible !important;
+}
+
+/* Specific fix for shuffle icon */
+.pi-shuffle {
+  display: inline-flex !important;
+}
+
+/* Ensure outlined button icons have the correct color */
+.p-button-outlined.p-button-primary .p-button-icon {
+  color: var(--accent-primary) !important;
+}
+
+.p-button-primary:not(.p-button-outlined) .p-button-icon {
+  color: #ffffff !important;
 }

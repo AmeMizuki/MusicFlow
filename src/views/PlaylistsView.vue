@@ -3,7 +3,7 @@
     <div class="view-header">
       <div class="title-area">
         <div class="icon-box">
-          <i class="pi pi-clone title-icon"></i>
+          <i class="pi pi-list title-icon"></i>
         </div>
         <div class="text-group">
           <h2>{{ $t('nav.playlists') }}</h2>

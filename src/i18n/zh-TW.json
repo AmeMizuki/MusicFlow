@@ -9,13 +9,18 @@
     "empty": "您的音樂庫目前還是空的",
     "empty_hint": "尚未添加任何音樂，請前往「上傳音樂」開始您的音樂之旅。",
     "like": "加入收藏",
-    "unlike": "取消收藏"
+    "unlike": "取消收藏",
+    "liked_title": "我喜歡的音樂",
+    "no_liked": "尚未收藏任何音樂",
+    "no_liked_hint": "點擊歌曲上的愛心圖標，將喜歡的音樂加入收藏。"
   },
   "nav": {
     "library": "主頁音樂",
     "playlists": "播放清單",
     "upload": "上傳音樂",
     "settings": "偏好設定",
+    "about": "關於我們",
+    "liked": "我的收藏",
     "my_playlists": "我的清單"
   },
   "stats": {
@@ -120,5 +125,27 @@
   "theme": {
     "dark": "暗色",
     "light": "亮色"
+  },
+  "about": {
+    "title": "關於 MusicFlow",
+    "subtitle": "打造極致的現代化音樂播放體驗",
+    "description": "MusicFlow 是我開發的一款現代化 Web 音樂播放器，旨在將頂尖的 UI 設計與流暢的音樂體驗相結合。它不僅僅是一個播放器，更展現了現代前端技術與藝術設計的融合。",
+    "features": {
+      "title": "應用優點",
+      "p1_title": "精緻視覺設計",
+      "p1_desc": "基於海軍藍與神秘紫的高級配色，結合玻璃擬態 (Glassmorphism) 設計。每一處轉場與微動效都經過精心調校，提供沉浸式的視覺享受。",
+      "p2_title": "適應性配色技術",
+      "p2_desc": "獨家開發的色彩提取算法，能根據當前播放音樂的封面動態調整整個介面的色調與光影，讓每一首歌都有屬於它的氛圍。",
+      "p3_title": "無縫檔案管理",
+      "p3_desc": "支持多種音樂格式 (MP3, WAV, FLAC, OGG, M4A) 與資料夾直接上傳。所有資料持久化存儲於本地緩存，保護隱私且響應迅速。"
+    },
+    "tech": {
+      "title": "使用技術",
+      "stack": "核心架構：Vue 3 + Vite + Pinia",
+      "ui": "界面框架：PrimeVue 4 + Vanilla CSS",
+      "i18n": "多語系支持：Vue-i18n",
+      "other": "色彩分析：Canvas API + ColorThief"
+    },
+    "github": "前往 GitHub 專案"
   }
 }

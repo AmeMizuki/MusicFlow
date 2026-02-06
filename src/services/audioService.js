@@ -58,7 +58,7 @@ class AudioService {
    * @returns {Promise<void>}
    */
   async load(file) {
-    if (!file || !(file instanceof File)) {
+    if (!file || !(file instanceof Blob)) {
       throw new Error('無效的檔案物件')
     }
 
